@@ -17,3 +17,7 @@ export function clientErrorResponse(error: string, response: Response) {
 export function serverErrorResponse(error: string, response: Response) {
 	statusCodeErrorResponse(error, 500, response);
 }
+
+export function invalidRequestParameterResponse(name: string, type: string, response: Response) {
+	clientErrorResponse(`'${name}' parameter either is undefined or isn't of type '${type}'.`, response);
+}
