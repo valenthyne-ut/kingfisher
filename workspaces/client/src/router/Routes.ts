@@ -28,6 +28,10 @@ export const Routes: readonly RouteRecordRaw[] = [
 				}
 			}
 		]
+	},
+	{
+		path: "/login",
+		component: () => import("@/views/LoginView.vue")
 	}
 ];
 
