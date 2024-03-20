@@ -2,8 +2,8 @@
   "name": "server",
   "packageManager": "yarn@4.1.1",
   "scripts": {
-	"build": "rimraf ./dist && tsc --build tsconfig.json && tsconfig-replace-paths tsconfig.json",
-	"start": "node ./dist/index.js"
+    "build": "rimraf ./dist && tsc --build tsconfig.json && tsconfig-replace-paths tsconfig.json",
+    "start": "node ./dist/index.js"
   },
   "dependencies": {
     "chalk": "4.1.2",
