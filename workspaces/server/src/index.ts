@@ -1,5 +1,6 @@
 import "dotenv/config";
 import config from "./config";
+import "@/strategies";
 
 import express from "express";
 import cors from "cors";

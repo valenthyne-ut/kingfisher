@@ -1,4 +1,5 @@
 import { logger } from "@/classes/Logger";
+import { randomBytes } from "crypto";
 import { readFileSync } from "fs";
 import { ServerOptions } from "https";
 import { join } from "path";
@@ -24,5 +25,6 @@ function getCredentials(): ServerOptions {
 
 export default {
 	PORT: parseInt(process.env.PORT) || 8443,
-	CREDENTIALS: getCredentials()
+	CREDENTIALS: getCredentials(),
+	JWT_SECRET: randomBytes(48).toString("hex")
 };
