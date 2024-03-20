@@ -1,9 +1,10 @@
+import { notImplementedRespose } from "@/util/api/Responses";
 import { Router } from "express";
 
 export const authRouter = Router()
 	.get("/", (request, response) => {
-		response.status(501).json({ error: "Not implemented." });
+		return notImplementedRespose(response);
 	})
 	.post("/", (request, response) => {
-		response.status(501).json({ error: "Not implemented." });
+		return notImplementedRespose(response);
 	});
