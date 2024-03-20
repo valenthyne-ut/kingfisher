@@ -7,8 +7,14 @@ import { createServer } from "https";
 import { logger } from "./classes/Logger";
 import chalk from "chalk";
 import { setupViewEngine } from "./config/ViewEngine";
+import { sequelize } from "./classes/database";
+import { initModels } from "./classes/database/models";
 
 (async () => {
+	initModels(sequelize);
+	await sequelize.sync();
+	logger.info("Database ready.");
+
 	const app = express();
 
 	app.use(cors({

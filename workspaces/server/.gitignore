@@ -1,5 +1,7 @@
 ### Files
 .env
+kingfisher.database
+*.database
 
 ### Folders
 dist
