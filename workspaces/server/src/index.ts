@@ -9,6 +9,7 @@ import chalk from "chalk";
 import { setupViewEngine } from "./config/ViewEngine";
 import { sequelize } from "./classes/database";
 import { initModels } from "./classes/database/models";
+import { apiRouter } from "./api";
 
 (async () => {
 	initModels(sequelize);
@@ -21,6 +22,9 @@ import { initModels } from "./classes/database/models";
 		origin: `https:/127.0.0.1:${config.PORT}`
 	}));
 
+	app.use(express.json());
+	app.use("/api", apiRouter);
+	
 	setupViewEngine(app);
 
 	const httpsServer = createServer(config.CREDENTIALS, app).listen(config.PORT);
