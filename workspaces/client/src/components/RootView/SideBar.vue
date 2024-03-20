@@ -26,7 +26,7 @@
 		<div class="w-0 grow flex flex-col">
 			<span>
 				<h1 class="font-bold text-3xl text-center text-white whitespace-nowrap">
-					<span class="bi-feather me-1"></span>{{ cShowTitle }}
+					<span class="bi-feather"></span> {{ cShowTitle }}
 				</h1>
 				<hr class="mt-3 border-zinc-600">
 			</span>
