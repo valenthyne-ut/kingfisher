@@ -1,5 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+	import SideBar from "@/components/RootView/SideBar.vue";
+	import TabHolder from "@/components/RootView/TabHolder.vue";
+</script>
 
 <template>
-	<h1 class="font-bold text-3xl">Hello world!</h1>
+	<SideBar />
+	<TabHolder>
+		<RouterView />
+	</TabHolder>
 </template>

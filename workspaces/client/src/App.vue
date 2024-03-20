@@ -1,7 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+	import AppHolder from "@/components/AppHolder.vue";
+</script>
 
 <template>
-	<main class="w-full h-screen flex justify-center items-center">
+	<AppHolder>
 		<RouterView />
-	</main>
+	</AppHolder>
 </template>
