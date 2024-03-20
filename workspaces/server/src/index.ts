@@ -6,6 +6,7 @@ import cors from "cors";
 import { createServer } from "https";
 import { logger } from "./classes/Logger";
 import chalk from "chalk";
+import { setupViewEngine } from "./config/ViewEngine";
 
 (async () => {
 	const app = express();
@@ -13,6 +14,8 @@ import chalk from "chalk";
 	app.use(cors({
 		origin: `https:/127.0.0.1:${config.PORT}`
 	}));
+
+	setupViewEngine(app);
 
 	const httpsServer = createServer(config.CREDENTIALS, app).listen(config.PORT);
 	
