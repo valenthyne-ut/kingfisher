@@ -27,7 +27,7 @@
 		<h1 class="font-bold text-3xl self-center">Login</h1>
 		<vAlert :type="loginState.successful ? 'success' : 'error'" :dismissable="true" v-model="loginState.message" class="mt-4"/>
 		<FormInputs class="mt-6"/>
-		<FillButton @click="login" class="
+		<FillButton type="submit" @click.prevent="login" class="
 			mt-6 p-4 rounded font-bold text-xl text-white 
 			bg-blue-600 hover:bg-blue-700 transition-colors
 		">
