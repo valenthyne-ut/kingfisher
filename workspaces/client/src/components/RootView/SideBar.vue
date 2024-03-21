@@ -2,6 +2,11 @@
 	import { ref, computed } from "vue";
 	import NavigationTab from "./NavigationTab.vue";
 	import { NavLinks } from "@/router/Routes";
+	import { useAuthStore } from "@/stores/authStore";
+	import { unwrapErrorMessage } from "@/util/general/Errors";
+	import router from "@/router";
+
+	const authStore = useAuthStore();
 
 	const expanded = ref<boolean>(true);
 
@@ -15,6 +20,15 @@
 
 	function toggleExpanded() {
 		expanded.value = !expanded.value;
+	}
+
+	async function logout() {
+		try {
+			await authStore.clearAuthentication();
+			router.push("/login");
+		} catch(error) {
+			console.log(unwrapErrorMessage(error));
+		}
 	}
 </script>
 
@@ -33,6 +47,9 @@
 			<nav class="h-full pt-3 flex flex-col gap-2">
 				<NavigationTab v-for="tab, index in NavLinks" :key="index"
 					:expanded="expanded" :link-to="tab.linkTo" :text="tab.text" :icon="tab.icon"
+				/>
+				<NavigationTab @click.prevent="logout" :expanded="expanded" link-to="/login" text="Logout" icon="bi-arrow-bar-left" class="
+					mt-auto bg-red-500 hover:bg-red-600"
 				/>
 			</nav>
 		</div>
