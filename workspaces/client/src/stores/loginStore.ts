@@ -8,8 +8,8 @@ export const useLoginStore = defineStore("login", () => {
 	const authAPI = new AuthAPI();
 
 	async function attemptLogin(): Promise<SuccessfulLoginResponse> {
-		if(!username.value) { throw new Error("Username is required."); }
-		if(!password.value) { throw new Error("Password is required."); }
+		if(!username.value || username.value.trim().length == 0) { throw new Error("Username is required."); }
+		if(!password.value || username.value.trim().length == 0) { throw new Error("Password is required."); }
 
 		return await authAPI.login(username.value, password.value);
 	}

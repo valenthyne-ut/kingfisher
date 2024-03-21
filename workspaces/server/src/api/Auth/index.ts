@@ -7,12 +7,13 @@ import { unwrapErrorMessage } from "@/util/general/Errors";
 import { Router } from "express";
 import { sign } from "jsonwebtoken";
 import passport from "passport";
+import { loginParameterFilter } from "./filters";
 
 export const authRouter = Router()
 	.get("/", (request, response) => {
 		return notImplementedRespose(response);
 	})
-	.post("/", (request, response, next) => {
+	.post("/", loginParameterFilter, (request, response, next) => {
 		passport.authenticate("password", { session: false }, (error: Error | null, user: User) => {
 			if(error) { return clientErrorResponse(error.message, response); }
 

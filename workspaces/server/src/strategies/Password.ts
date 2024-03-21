@@ -4,8 +4,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 
 passport.use("password", new LocalStrategy({
-	usernameField: "username",
-	passwordField: "password"
+	session: false
 }, async (username, password, done) => {
 	const user = await User.findOne({ where: { username: username } });
 	if(!user) { return done(new Error("No user with provided name found."), false); }
