@@ -1,17 +1,18 @@
 import { logger } from "@/classes/Logger";
-import { User } from "@/classes/database/models";
+import { InvalidJWT, User } from "@/classes/database/models";
 import config from "@/config";
 import { JWTPayload } from "@/types/api/Auth/JWTPayload";
-import { clientErrorResponse, notImplementedRespose, serverErrorResponse } from "@/util/api/Responses";
+import { clientErrorResponse, serverErrorResponse } from "@/util/api/Responses";
 import { unwrapErrorMessage } from "@/util/general/Errors";
 import { Router } from "express";
 import { sign } from "jsonwebtoken";
 import passport from "passport";
 import { loginParameterFilter } from "./filters";
+import { invalidJWTFilter } from "@/middleware/InvalidJWTFilter";
 
 export const authRouter = Router()
-	.get("/", (request, response) => {
-		return notImplementedRespose(response);
+	.get("/", invalidJWTFilter, passport.authenticate("jwt", { session: false }), (request, response) => {
+		return response.status(200).json({});
 	})
 	.post("/", loginParameterFilter, (request, response, next) => {
 		passport.authenticate("password", { session: false }, (error: Error | null, user: User) => {
@@ -38,4 +39,16 @@ export const authRouter = Router()
 				});
 			});
 		})(request, response, next);
+	})
+	.delete("/", invalidJWTFilter, passport.authenticate("jwt", { session: false }), async (request, response) => {
+		try {
+			const authHeader = request.headers.authorization!;
+			const jwt = authHeader.substring(7, authHeader.length);
+
+			await InvalidJWT.create({ jwt: jwt });
+			return response.status(200).json({});
+		} catch(error) {
+			logger.error(unwrapErrorMessage(error));
+			return serverErrorResponse("Something went wrong while logging you out.", response);
+		}
 	});

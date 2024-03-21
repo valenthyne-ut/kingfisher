@@ -21,3 +21,7 @@ export function serverErrorResponse(error: string, response: Response) {
 export function invalidRequestParameterResponse(name: string, type: string, response: Response) {
 	clientErrorResponse(`'${name}' parameter either is undefined or isn't of type '${type}'.`, response);
 }
+
+export function unauthorizedResponse(response: Response) {
+	statusCodeErrorResponse("Unauthorized.", 401, response);
+}
