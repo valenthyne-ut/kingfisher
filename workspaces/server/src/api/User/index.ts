@@ -1,4 +1,4 @@
-import { clientErrorResponse, notImplementedRespose, serverErrorResponse } from "@/util/api/Responses";
+import { clientErrorResponse, serverErrorResponse } from "@/util/api/Responses";
 import { Request, Router } from "express";
 import { userCreationParameterFilter } from "./filters";
 import { UserCreationParameters } from "@/types/api/User";
@@ -6,10 +6,17 @@ import { User } from "@/classes/database/models";
 import { hashSync } from "bcrypt";
 import { unwrapErrorMessage } from "@/util/general/Errors";
 import config from "@/config";
+import { invalidJWTFilter } from "@/middleware/InvalidJWTFilter";
+import passport from "passport";
 
 export const userRouter = Router()
-	.get("/", (request, response) => {
-		return notImplementedRespose(response);
+	.get("/", invalidJWTFilter, passport.authenticate("jwt", { session: false }), (request, response) => {
+		const user = request.user as User;
+		return response.status(200).json({
+			user: {
+				username: user.username
+			}
+		});
 	})
 	.post("/", userCreationParameterFilter, async (request: Request<unknown, unknown, UserCreationParameters>, response) => {
 		try {
