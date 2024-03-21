@@ -1,3 +1,4 @@
+import { useAuthStore } from "@/stores/authStore";
 import RootView from "@/views/RootView.vue";
 import type { RouteRecordRaw } from "vue-router";
 
@@ -27,11 +28,19 @@ export const Routes: readonly RouteRecordRaw[] = [
 					title: "Settings"
 				}
 			}
-		]
+		],
+		beforeEnter: async () => {
+			const authStore = useAuthStore();
+			if(!authStore.authenticated) { return { path: "/login" }; }
+		}
 	},
 	{
 		path: "/login",
-		component: () => import("@/views/LoginView.vue")
+		component: () => import("@/views/LoginView.vue"),
+		beforeEnter: async () => {
+			const authStore = useAuthStore();
+			if(authStore.authenticated) { return { path: "/" }; }
+		}
 	}
 ];
 

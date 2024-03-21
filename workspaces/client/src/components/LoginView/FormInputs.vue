@@ -1,8 +1,10 @@
 <script setup lang="ts">
 	import { computed, ref } from "vue";
 	import LabelledInput from "./LabelledInput.vue";
+	import { useLoginStore } from "@/stores/loginStore";
 
-	const username = ref<string>(""), password = ref<string>("");
+	const loginStore = useLoginStore();
+
 	const timer = ref<{ timeLeft: number, intervalId: number }>({ timeLeft: -1, intervalId: -1 });
 	const passwordVisible = ref<boolean>(false);
 
@@ -42,8 +44,8 @@
 
 <template>
 	<div class="flex flex-col">
-		<LabelledInput id="username" type="text" label="Username" icon="bi-person-badge-fill" v-model="username"/>
-		<LabelledInput id="password" :type="cPasswordInputType" label="Password" icon="bi-key" v-model="password" class="mt-4">
+		<LabelledInput id="username" type="text" label="Username" icon="bi-person-badge-fill" v-model="loginStore.username"/>
+		<LabelledInput id="password" :type="cPasswordInputType" label="Password" icon="bi-key" v-model="loginStore.password" class="mt-4">
 			<div class="py-4 pe-4 flex text-gray-600">
 				<span v-if="passwordVisible" class="ms-2">{{ timer.timeLeft }}s</span>
 				<button type="button" @click="togglePasswordVisibility" aria-hidden="true" class="
