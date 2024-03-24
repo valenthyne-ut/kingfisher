@@ -1,5 +1,6 @@
 import { DirtyLoginParameters } from "@/types/api/Auth";
-import { clientErrorResponse } from "@/util/api/Responses";
+import { validatePrimitiveRequestParameter } from "@/util/api/Requests";
+import { clientErrorResponse, invalidRequestParameterResponse } from "@/util/api/Responses";
 import { RequestHandler } from "express";
 
 /* 
@@ -17,6 +18,8 @@ export const loginParameterFilter: RequestHandler<
 	DirtyLoginParameters
 > = (request, response, next) => {
 	const { username, password } = request.body;
+	if(!validatePrimitiveRequestParameter(username, "string")) { return invalidRequestParameterResponse("username", "string", response); }
+	if(!validatePrimitiveRequestParameter(password, "string")) { return invalidRequestParameterResponse("password", "string", response); }
 	if(!username || username.trim().length == 0) { return clientErrorResponse("Username is required.", response); }
 	if(!password || password.trim().length == 0) { return clientErrorResponse("Password is required.", response); }
 	return next();
